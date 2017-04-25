@@ -90,8 +90,11 @@ function Event(date, desc, mask) {
 	me.LIGHT_CANDLES_TZEIS = !!( mask & LIGHT_CANDLES_TZEIS  );
 }
 
-Event.prototype.is = function(date, il) {
-	date = new HDate(date), myDate = this.date;
+Event.prototype.is = function (date, il) {
+	if (!date instanceof HDate) {
+		date = new HDate(date)
+	}
+	myDate = this.date;
 	if (arguments.length < 2) {
 		//il = Event.isIL;
 		il = date.il;

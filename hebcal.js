@@ -52,6 +52,7 @@ var defProp = Object.defineProperty,
 	months = c.months,
 	TISHREI = months.TISHREI,
 	NISAN = months.NISAN,
+	KISLEV = months.KISLEV,
 	HebcalProto = Hebcal.prototype,
 	MonthProto = Month.prototype,
 	GregYearProto = GregYear.prototype,
@@ -265,7 +266,7 @@ HebcalProto[find][strings] = function strings(str) {
 HebcalProto[find][strings].rosh_chodesh = function() {
 	return this[find]('Rosh Chodesh', c.range(1, this.months[length]));
 };
-HebcalProto[find][strings].holidays = function() {
+HebcalProto[find][strings].holidays = function () {
 	return [].concat.apply([], this.holidays[map](function(h){
 		return this[find](h.date);
 	}, this));
@@ -297,6 +298,10 @@ HebcalProto[find][strings].rosh_hashana = function() {
 	return this[find](c.range(1, 2), TISHREI);
 };
 HebcalProto[find][strings].rosh_hashanah = HebcalProto[find][strings].rosh_hashana;
+HebcalProto[find][strings].chanuka = function() {
+	return this[find](c.range(25, 33), KISLEV);
+};
+HebcalProto[find][strings].chanuka = HebcalProto[find][strings].chanuka;
 
 // Hebcal properties
 
@@ -619,6 +624,11 @@ HDateProto.omer = function() {
 HDateProto.dafyomi = function(o) {
 	return dafyomi.dafname(dafyomi.dafyomi(this.greg()), o);
 };
+
+HDateProto.fullyear = function () {
+	var year = this[getYearObject](), y = year.year;
+	return year;
+}
 
 HDateProto.tachanun = (function() {
 	var NONE      = tachanun.NONE      = 0,
